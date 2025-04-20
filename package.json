@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
-    "build": "NODE_ENV=production webpack --config webpack.prod.js",
+    "build": "NODE_ENV=production webpack --config webpack.prod.js --mode production",
     "prod": "npm install --omit=dev && node server.js",
     "test": "jest",
     "analyze": "webpack --config webpack.prod.js --analyze",
