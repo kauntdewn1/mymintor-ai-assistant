@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Container } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
+import { AuthProvider } from './contexts/AuthContext';
+import AppRoutes from './routes';
 
 const theme = createTheme({
   palette: {
@@ -19,12 +22,24 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
-        <Box sx={{ my: 4 }}>
-          <h1>IA Assistente FlowOFF</h1>
-          <p>Sistema de Consultoria em Marketing Digital</p>
-        </Box>
-      </Container>
+      <AuthProvider>
+        <BrowserRouter>
+          <Suspense
+            fallback={
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="100vh"
+              >
+                <CircularProgress />
+              </Box>
+            }
+          >
+            <AppRoutes />
+          </Suspense>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

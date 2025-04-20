@@ -1,6 +1,7 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Box } from '@mui/material';
+
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Chat from './pages/Chat';
@@ -28,23 +29,28 @@ function App() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {isAuthenticated && <RealTimeNotifications />}
-      
+
       <Routes>
         {/* Rotas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+
+        {/* Redirecionamento automático se não estiver autenticado */}
+        {!isAuthenticated && <Route path="*" element={<Navigate to="/login" />} />}
+
         {/* Rotas protegidas */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="chat" element={<Chat />} />
-          <Route path="tasks" element={<Tasks />} />
-          <Route path="calendar" element={<Calendar />} />
-          <Route path="content" element={<ContentGenerator />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-        
-        {/* Rota para página não encontrada */}
+        {isAuthenticated && (
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="chat" element={<Chat />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="content" element={<ContentGenerator />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        )}
+
+        {/* Página não encontrada */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>
