@@ -17,6 +17,7 @@ COPY . .
 ENV NODE_ENV=production
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 ENV REACT_APP_SOCKET_URL=${REACT_APP_SOCKET_URL}
+ENV MONGODB_URI=${MONGODB_URI}
 
 # Build the application with verbose output
 RUN npm run build --verbose
