@@ -95,5 +95,6 @@ module.exports = {
     client: {
       overlay: true,
     },
+    allowedHosts: 'all',
   },
 };

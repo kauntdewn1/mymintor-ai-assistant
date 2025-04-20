@@ -11,6 +11,7 @@ const BackupScheduler = require('./backupScheduler');
 
 // Configuração de variáveis de ambiente
 dotenv.config();
+app.set('trust proxy', true);
 
 // Inicialização do app Express
 const app = express();
