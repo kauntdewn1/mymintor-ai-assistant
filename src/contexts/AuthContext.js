@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -10,18 +9,19 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     console.log('AuthContext - Initializing auth check');
-    const checkAuth = async () => {
+    const checkAuth = () => {
       try {
         const token = localStorage.getItem('token');
         console.log('AuthContext - Token found:', !!token);
         
         if (token) {
-          const response = await axios.get('/api/auth/me', {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          console.log('AuthContext - User data:', response.data);
-          setUser(response.data);
-          setIsAuthenticated(true);
+          const userData = JSON.parse(atob(token));
+          if (userData.email === 'admin@flowoff.com.br') {
+            setUser(userData);
+            setIsAuthenticated(true);
+          } else {
+            localStorage.removeItem('token');
+          }
         }
       } catch (error) {
         console.error('AuthContext - Auth check failed:', error);
@@ -38,20 +38,26 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     console.log('AuthContext - Attempting login');
-    try {
-      const response = await axios.post('/api/auth/login', credentials);
-      console.log('AuthContext - Login successful:', response.data);
-      const { token, user } = response.data;
+    
+    // Verifica apenas as credenciais do admin
+    if (credentials.email === 'admin@flowoff.com.br' && credentials.password === 'admin123') {
+      const adminUser = {
+        id: 1,
+        name: 'Administrador',
+        email: 'admin@flowoff.com.br',
+        role: 'admin'
+      };
+      
+      const token = btoa(JSON.stringify(adminUser));
       localStorage.setItem('token', token);
-      setUser(user);
+      setUser(adminUser);
       setIsAuthenticated(true);
+      console.log('AuthContext - Admin login successful');
       return true;
-    } catch (error) {
-      console.error('AuthContext - Login failed:', error);
-      setUser(null);
-      setIsAuthenticated(false);
-      return false;
     }
+
+    console.log('AuthContext - Invalid credentials');
+    return false;
   };
 
   const logout = () => {
