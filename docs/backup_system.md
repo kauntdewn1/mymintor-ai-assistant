@@ -20,14 +20,14 @@ O sistema de backup pode ser configurado através das seguintes variáveis de am
 
 - `BACKUP_DIR`: Diretório onde os backups serão armazenados (padrão: 'backups')
 - `BACKUP_RETENTION_DAYS`: Número de dias para manter os backups (padrão: 7)
-- `BACKUP_SCHEDULE`: Cron schedule para backups automáticos (padrão: '0 0 * * *' - diariamente à meia-noite)
+- `BACKUP_SCHEDULE`: Cron schedule para backups automáticos (padrão: '0 */6 * * *' - a cada 6 horas)
 
 ### Exemplo de Configuração
 
 ```env
 BACKUP_DIR=backups
 BACKUP_RETENTION_DAYS=7
-BACKUP_SCHEDULE=0 0 * * *
+BACKUP_SCHEDULE=0 */6 * * *
 ```
 
 ## Uso
@@ -106,4 +106,4 @@ Os logs do sistema de backup podem ser encontrados no arquivo de log principal d
 
 ## Contribuição
 
-Para contribuir com o sistema de backup, siga as diretrizes de contribuição do projeto. 
+Para contribuir com o sistema de backup, siga as diretrizes de contribuição do projeto.

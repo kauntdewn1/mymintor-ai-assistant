@@ -20,6 +20,15 @@ app.use(helmet({
   },
 }));
 
+// Healthcheck endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // Serve static files from the build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
