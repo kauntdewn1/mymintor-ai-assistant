@@ -2,7 +2,7 @@
   "name": "ia-assistente-flowoff-frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack serve --config webpack.config.js --mode development",
+    "start": "node server.js",
     "build": "webpack --config webpack.config.js --mode production",
     "test": "jest",
     "analyze": "webpack --config webpack.prod.js --analyze",
