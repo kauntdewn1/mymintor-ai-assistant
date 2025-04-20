@@ -112,7 +112,6 @@ O site da IA Assistente FlowOFF será uma interface web que permitirá aos usuá
 
 ### Implantação
 - Hospedagem em serviço de nuvem (AWS, Google Cloud, ou similar)
-- Containerização com Docker
 - CI/CD para implantação contínua
 - CDN para entrega de conteúdo estático
 
